@@ -66,26 +66,56 @@ def earliest_ancestor(ancestors, starting_node):
     graph.add_edge(8, 4)
     graph.add_edge(8, 11)
     
-    # Create a queue
-    q = Queue()
-    # Enqueue the starting vertex
-    q.enqueue(starting_node)
+    # # Create a queue
+    # q = Queue()
+    # # Enqueue the starting vertex
+    # q.enqueue(starting_node)
+    # # Create a set to store visited vertices
+    # visited = set()
+    # # While the queue is not empty
+    # while q.size() > 0:
+    #     # Dequeue the first vertex
+    #     v = q.dequeue()
+    #     # Check if it's been visited
+    #     # If it hasn't been visted
+    #     if v not in visited:
+    #         # Mark it as visited
+    #         visited.add(v)
+            
+    #         # Enqueue all it's neighbors
+    #         for neighbor in graph.get_neighbors(v):
+    #             q.enqueue(neighbor)
+    #         if neighbor not in graph.get_neighbors(v):  
+    #             print(v)   
+
+    # Create a stack
+    s = Stack()
+    # Push A PATH TO the starting vertex
+    s.push([starting_node])
     # Create a set to store visited vertices
     visited = set()
-    # While the queue is not empty
-    while q.size() > 0:
-        # Dequeue the first vertex
-        v = q.dequeue()
+    # While the stack is not empty
+    while s.size() > 0:
+        # Pop the first PATH
+        path = s.pop()
+        # GRAB THE VERTEX FROM THE END OF THE PATH
+        v = path[-1]
         # Check if it's been visited
         # If it hasn't been visted
         if v not in visited:
             # Mark it as visited
             visited.add(v)
-            
-            # Enqueue all it's neighbors
+            # CHECK IF IT'S THE TARGET
+            if path:
+                # IF SO, RETURN THE PATH
+                print(path[-1])
+                    
+            # Push all it's neighbors
             for neighbor in graph.get_neighbors(v):
-                q.enqueue(neighbor)
-            if neighbor not in graph.get_neighbors(v):  
-                print(v)   
-                
+                # MAKE A COPY OF THE PATH
+                path_copy = path.copy()
+                path_copy.append(neighbor)
+                # ENQUEUE THE COPY
+                s.push(path_copy)
+
 earliest_ancestor(None,6)               
